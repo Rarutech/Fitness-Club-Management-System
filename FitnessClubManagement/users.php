@@ -19,20 +19,18 @@ function respond($message, $status = 200) {
 }
 
 if ($method == "POST") {
-    if (empty($input["firstname"]) || 
-        empty($input["lastname"]) || 
+    if (empty($input["fullname"]) || 
         empty($input["email"]) || 
         empty($input["password"])) {
         respond("All fields are required", 400);
     }
 
-    $firstname = $input["firstname"];
-    $lastname = $input["lastname"];
+    $fullname = $input["fullname"];
     $email = $input["email"];
     $password = password_hash($input['password'], PASSWORD_BCRYPT);
     $role = $input['role'] ?? 'member';
 
-    $sql = "INSERT INTO users (firstname, lastname, email, password, role) VALUES ('$firstname', '$lastname', '$email', '$password', '$role')";
+    $sql = "INSERT INTO users (fullname, email, password, role) VALUES ('$fullname', '$email', '$password', '$role')";
 
     if ($conn->query($sql) === TRUE) {
         respond("User created successfully");
@@ -64,38 +62,46 @@ if ($method == "POST") {
         respond($users);  
     }
 } elseif ($method == "PUT") {
-    if (empty($input["id"]) || empty($input["firstname"]) || empty($input["lastname"]) || empty($input["email"])) {
-        respond("All fields are required", 400);
-    }
+    if (isset($_GET["id"])) {
+        $id = $_GET["id"];
+        parse_str(file_get_contents('php://input'), $input);
 
-    $id = $input["id"];
-    $firstname = $input["firstname"];
-    $lastname = $input["lastname"];
-    $email = $input["email"];
-    $role = $input['role'] ?? 'member';
+        if (empty($input["fullname"]) || 
+            empty($input["email"])) {
+            respond("Fullname and email are required", 400);
+        }
 
-    $sql = "UPDATE users SET firstname='$firstname', lastname='$lastname', email='$email', role='$role' WHERE id='$id'";
+        $fullname = $input["fullname"];
+        $email = $input["email"];
+        $password = !empty($input['password']) ? password_hash($input['password'], PASSWORD_BCRYPT) : null;
+        $role = $input['role'] ?? 'member';
 
-    if ($conn->query($sql) === TRUE) {
-        respond("User updated successfully");
+        $sql = "UPDATE users SET fullname='$fullname', email='$email', role='$role'";
+        if ($password) {
+            $sql .= ", password='$password'";
+        }
+        $sql .= " WHERE id='$id'";
+
+        if ($conn->query($sql) === TRUE) {
+            respond("User updated successfully");
+        } else {
+            respond("Error: " . $conn->error, 500);
+        }
     } else {
-        respond("Error: " . $conn->error, 500);
+        respond("User ID is required", 400);
     }
 } elseif ($method == "DELETE") {
-    if (empty($input["id"])) {
-        respond("ID is required", 400);
-    }
+    if (isset($_GET["id"])) {
+        $id = $_GET["id"];
+        $sql = "DELETE FROM users WHERE id='$id'";
 
-    $id = $input["id"];
-
-    $sql = "DELETE FROM users WHERE id='$id'";
-
-    if ($conn->query($sql) === TRUE) {
-        respond("User deleted successfully");
+        if ($conn->query($sql) === TRUE) {
+            respond("User deleted successfully");
+        } else {
+            respond("Error: " . $conn->error, 500);
+        }
     } else {
-        respond("Error: " . $conn->error, 500);
+        respond("User ID is required", 400);
     }
-} else {
-    respond("Invalid request method", 405);
 }
 ?>
