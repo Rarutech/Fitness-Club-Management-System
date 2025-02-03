@@ -46,7 +46,7 @@ $token = bin2hex(random_bytes(16));
 $sql = "UPDATE users SET token='$token' WHERE email='$email'";
 
 if ($conn->query($sql) === TRUE) {
-    respond(["message" => "Login successful", "token" => $token]);
+    respond(["message" => "Login successful", "token" => $token, "email" => $email]);
 } else {
     respond(["message" => "Error: " . $conn->error], 500);
 }
