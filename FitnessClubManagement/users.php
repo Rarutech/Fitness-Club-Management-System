@@ -33,7 +33,7 @@ if ($method == "POST") {
     $sql = "INSERT INTO users (fullname, email, password, role) VALUES ('$fullname', '$email', '$password', '$role')";
 
     if ($conn->query($sql) === TRUE) {
-        respond("User created successfully");
+        respond(["message"=>"User created successfully"]);
     } else {
         respond("Error: " . $conn->error, 500);
     }
