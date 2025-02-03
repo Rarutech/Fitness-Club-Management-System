@@ -1,10 +1,11 @@
 <?php
 include "database.php";
 
-function respond($message, $status = 200) {
-    http_response_code($status);
-    echo json_encode($message);
-    exit();
+function respond($data, $status_code = 200) {
+    http_response_code($status_code);
+    header('Content-Type: application/json');
+    echo json_encode($data);
+    exit;
 }
 
 $method = $_SERVER['REQUEST_METHOD'];

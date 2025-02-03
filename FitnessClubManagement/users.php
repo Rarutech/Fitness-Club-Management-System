@@ -19,9 +19,7 @@ function respond($message, $status = 200) {
 }
 
 if ($method == "POST") {
-    if (empty($input["fullname"]) || 
-        empty($input["email"]) || 
-        empty($input["password"])) {
+    if (empty($input["fullname"]) || empty($input["email"]) || empty($input["password"])) {
         respond("All fields are required", 400);
     }
 
@@ -33,7 +31,7 @@ if ($method == "POST") {
     $sql = "INSERT INTO users (fullname, email, password, role) VALUES ('$fullname', '$email', '$password', '$role')";
 
     if ($conn->query($sql) === TRUE) {
-        respond(["message"=>"User created successfully"]);
+        respond("User created successfully");
     } else {
         respond("Error: " . $conn->error, 500);
     }
