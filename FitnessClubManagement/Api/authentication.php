@@ -22,18 +22,16 @@ if ($contentType === "application/json") {
     parse_str(file_get_contents('php://input'), $input);
 }
 
-if (empty($input["email"])) {
-    respond(["message" => "Email is required"], 400);
-}
-
 $email = $input["email"];
+$token = $input["token"];
 
-$sql = "SELECT * FROM users WHERE email='$email' AND token IS NOT NULL";
+$sql = "SELECT * FROM users WHERE email='$email' AND token='$token'";
 $result = $conn->query($sql);
 
 if ($result->num_rows === 0) {
-    respond(["message" => "Invalid email or no active session"], 401);
+    respond(["message" => "Invalid email or token"], 401);
 }
 
+// Proceed with the authenticated action
 respond(["message" => "Authentication successful"]);
 ?>
