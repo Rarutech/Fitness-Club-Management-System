@@ -1,26 +1,25 @@
 <?php
-    include '../includes/database.php';
+    include '../database.php';
 
     // Check if a search term is provided
     $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
-    // Sanitize the search term (e.g., integers for `id` and `user_id`, strings for `membership_start` and `membership_end`)
-    $searchTerm = mysqli_real_escape_string($conn, $searchTerm);
-
-    // Modify the query to filter by `id` or `user_id` if search term is provided
+    // Build the query
     $query = "SELECT * FROM members";
+    $conditions = [];
     if ($searchTerm) {
-        // Add filtering for both `id` and `user_id`
-        $query .= " WHERE id LIKE '%$searchTerm%' OR user_id LIKE '%$searchTerm%'";
+        $conditions[] = "(id LIKE '%$searchTerm%' OR user_id LIKE '%$searchTerm%')";
+    }
+    if ($conditions) {
+        $query .= " WHERE " . implode(" AND ", $conditions);  
     }
 
     $result = mysqli_query($conn, $query);
 
     // Check if query was successful
     if (!$result) {
-        // Enhanced error message for production environments
         echo "Error: " . mysqli_error($conn);
-        exit; // Stop further execution if query fails
+        exit;
     }
 ?>
 
@@ -68,6 +67,8 @@
                     <th>User ID</th>
                     <th>Membership Start</th>
                     <th>Membership End</th>
+                    <th>Role</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -79,6 +80,8 @@
                     echo "<td>" . ($row['user_id']) . "</td>";
                     echo "<td>" . ($row['membership_start']) . "</td>";
                     echo "<td>" . ($row['membership_end']) . "</td>";
+                    echo "<td>" . ($row['role']) . "</td>"; 
+                    echo "<td>" . ($row['status']) . "</td>";
                     echo "</tr>";
                 }
                 ?>
