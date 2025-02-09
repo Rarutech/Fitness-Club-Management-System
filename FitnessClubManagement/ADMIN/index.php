@@ -16,7 +16,7 @@ session_start();
     <ul id="side-nav">
         <!-- Logo -->
         <li class="logo">
-            <img src="logo.png" alt="Logo">
+            <img src="" alt="Logo">
         </li>
         <!-- Navigation Links -->
         <li><a href="index.php?page=dashboard" class="<?= ($_GET['page'] ?? 'dashboard') == 'dashboard' ? 'active' : ''; ?>"><i class="ri-dashboard-3-line"></i>Dashboard</a></li>
@@ -59,7 +59,7 @@ session_start();
                 </button>
                 <div class="user-info">
                     <?php if (isset($_SESSION['username'])): ?>
-                        <img src="admin-avatar.jpg" alt="Admin" class="user-avatar">
+                        <img src="img/01.png" alt="Admin" class="user-avatar">
                         <div class="user-details">
                             <h3><?php echo $_SESSION['username']; ?></h3>
                             <p><?php echo $_SESSION['role']; ?></p>
