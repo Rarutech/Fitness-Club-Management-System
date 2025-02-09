@@ -1,5 +1,5 @@
 <?php
-include '../includes/database.php';
+include '../database.php';
 
 // Handle Add Product
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_product'])) {

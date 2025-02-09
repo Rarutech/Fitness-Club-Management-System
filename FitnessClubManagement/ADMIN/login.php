@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="login-container">
         <div class="login-form">
             <div class="logo">
-                <img src="logo.png" alt="Admin Logo">
+                <img src="img/01.png" alt="Admin Logo">
             </div>
             <h2>Login</h2>
 
