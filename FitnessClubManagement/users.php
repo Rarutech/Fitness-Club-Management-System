@@ -47,17 +47,6 @@ if ($method == "POST") {
         } else {
             respond("User not found", 404);
         }
-    } elseif (isset($_GET["email"])) {
-        $id = $_GET["email"];
-        $sql = "SELECT * FROM users WHERE id='$email'";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            $user = $result->fetch_assoc();
-            respond($user);
-        } else {
-            respond("User not found", 404);
-        }
     } else {
         $sql = "SELECT * FROM users";
         $result = $conn->query($sql);

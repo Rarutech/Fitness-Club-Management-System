@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Sidebar Navigation */
+#side-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    padding-top: 20px;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+#side-nav li {
+    list-style: none;
+    padding: 10px;
+}
+
+#side-nav .logo {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    margin-bottom: 20px; /* Space below the logo */
+}
+
+#side-nav .logo img {
+    width: 70%; /* Adjust the percentage as needed */
+    max-width: 120px; /* Prevents the image from being too large */
+    height: auto;
+    display: block;
+}
+
+/* Default link styles */
+#side-nav a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: 15px;
+    display: block;
+    padding: 12px 20px;
+    transition: 0.3s;
+}
+
+#side-nav i {
+    padding-right: 5px;
+}
+
+/* Hover effect */
+#side-nav a:hover {
+    background-color: rgba(255, 33, 33, 0.226); /* Slightly faded blue */
+}
+
+/* Active Page Highlight */
+#side-nav a.active {
+    background-color: rgba(255, 33, 33, 0.226); /* Slightly faded blue */
+    font-weight: bold;
+    border-right: 5px solid #EFBF04; /* Add left border */
+}
+
+/* Page Content */
+.content {
+    margin-left: 240px; /* Prevents content from overlapping sidebar */
+    padding: 20px;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header-left {
+    flex: 1; /* Makes the left section take up remaining space */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 15px;
+    color: #333;
+    padding-left: 5px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.notification-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-details h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.user-details p {
+    margin: 0;
+    font-size: 12px;
+    color: #777;
+}
+
+/* Logout Button */
+.logout-btn {
+    padding: 8px 16px;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.logout-btn:hover {
+    background-color: #c0392b;
+}
+
+
+

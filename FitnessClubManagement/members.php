@@ -23,13 +23,15 @@ function respond($message, $status = 200) {
 
 ### POST Method - Create Member ###
 if ($method == "POST") {
-    if (empty($input["user_id"]) || empty($input["membership_start"]) || empty($input["membership_end"])) {
-        respond("User ID, membership start date, and membership end date are required", 400);
+    if (empty($input["user_id"]) || empty($input["membership_start"]) || empty($input["membership_end"]) || empty($input["role"]) || empty($input["status"])) {
+        respond("User ID, membership start date, membership end date, role, and status are required", 400);
     }
 
     $user_id = $input["user_id"];
     $membership_start = $input["membership_start"];
     $membership_end = $input["membership_end"];
+    $role = $input["role"];
+    $status = $input["status"];
 
     // Check if the user_id already exists in the 'members' table
     $sql = "SELECT id FROM members WHERE user_id = ?";
@@ -45,9 +47,9 @@ if ($method == "POST") {
     $stmt->close();
 
     // Proceed with creating the new member
-    $stmt = $conn->prepare("INSERT INTO members (user_id, membership_start, membership_end) 
-                           VALUES (?, ?, ?)");
-    $stmt->bind_param("iss", $user_id, $membership_start, $membership_end);
+    $stmt = $conn->prepare("INSERT INTO members (user_id, membership_start, membership_end, role, status)
+                            VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("iss", $user_id, $membership_start, $membership_end, $role, $status);
 
     try {
         if ($stmt->execute()) {
@@ -90,14 +92,16 @@ elseif ($method == "GET") {
 
 ### PUT Method - Update Member ###
 elseif ($method == "PUT") {
-    if (empty($input["id"]) || empty($input["user_id"]) || empty($input["membership_start"]) || empty($input["membership_end"])) {
-        respond("Member ID, user ID, membership start date, and membership end date are required", 400);
+    if (empty($input["id"]) || empty($input["user_id"]) || empty($input["membership_start"]) || empty($input["membership_end"]) || empty($input["role"]) || empty($input["status"])) {
+        respond("Member ID, user ID, membership start date, and membership end date, role, and status are required", 400);
     }
 
     $id = $input["id"];
     $user_id = $input["user_id"];
     $membership_start = $input["membership_start"];
     $membership_end = $input["membership_end"];
+    $role = $input["role"];
+    $status = $input["status"];
 
     // Check if the member with the given ID exists in the database
     $sql = "SELECT id FROM members WHERE id = ?";
@@ -125,8 +129,8 @@ elseif ($method == "PUT") {
     $stmt->close();
 
     // Proceed with the update if the member exists and user_id matches
-    $stmt = $conn->prepare("UPDATE members SET user_id=?, membership_start=?, membership_end=? WHERE id=?");
-    $stmt->bind_param("issi", $user_id, $membership_start, $membership_end, $id);
+    $stmt = $conn->prepare("UPDATE members SET user_id=?, membership_start=?, membership_end=?, role=?, status=?, WHERE id=?");
+    $stmt->bind_param("issi", $user_id, $membership_start, $membership_end, $role, $status, $id);
 
     try {
         if ($stmt->execute()) {
