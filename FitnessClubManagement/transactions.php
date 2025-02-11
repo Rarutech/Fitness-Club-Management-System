@@ -53,9 +53,9 @@ if ($method == "POST") {
 
 ### GET Method - Read Transaction(s) ###
 elseif ($method == "GET") {
-    if (isset($_GET["id"])) {
+    if (isset($_GET["member_id"])) {
         $id = $_GET["id"];
-        $sql = "SELECT * FROM transactions WHERE id='$id'";
+        $sql = "SELECT * FROM transactions WHERE id='$member_id'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
